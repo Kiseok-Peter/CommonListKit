@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "commonfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:Kiseok-Peter/CommonFoundation.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "c10f43b14c22c7373cfe52cc39dfb5ecd4d60b30"
+      }
+    }
+  ],
+  "version" : 2
+}

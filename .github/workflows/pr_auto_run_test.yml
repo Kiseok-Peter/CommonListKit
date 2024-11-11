@@ -1,0 +1,55 @@
+# PR 요청시 develop, release/*, hotfix/*에 요청하는 경우 테스트 코드 검사 실행
+name: Pull Request Run Test
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'release/*'
+      - 'hotfix/*'
+
+jobs:
+  Initialize:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          submodules: true
+        
+      - name: Initialize
+        run: |
+          rm -rf build/
+          rm -rfv ~/Library/Developer/Xcode/Archives/*
+          
+  Tuist-Initialize:
+    runs-on: self-hosted
+    needs: Initialize
+    
+    steps:
+      - name: Tuist Check
+        run: sh get_started.sh
+
+      - name: Tuist build
+        run: mise x -- tuist build
+
+  Run-Test:
+    runs-on: self-hosted
+    needs: Tuist-Initialize
+    
+    steps:
+      - name: Run Test Code
+        run: sh ./script/run_test.sh
+        
+      - uses: kishikawakatsumi/xcresulttool@v1
+        with:
+          path: TestResults.xcresult
+
+  Deinitialize:
+    runs-on: self-hosted
+    needs: Run-Test
+    
+    steps:
+      - name: Deinitialize
+        run: rm -rf TestResults.xcresult

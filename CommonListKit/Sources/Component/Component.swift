@@ -33,6 +33,13 @@ protocol Component: Hashable {
     var identifier: String { get }
     
     /**
+     크기 계산용 hash 처리 함수
+     
+     - Parameter hasher: 해시 처리를 위한 Hasher 객체
+     */
+    func sizeHash(into hasher: inout Hasher)
+    
+    /**
      `'Contnet'` View에 데이터 적용하는 함수
      
      - Parameters:
@@ -49,4 +56,12 @@ protocol Component: Hashable {
 
 extension Component {
     func renderContent() -> Content { Content() }
+}
+
+extension Component {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+        
+        sizeHash(into: &hasher)
+    }
 }

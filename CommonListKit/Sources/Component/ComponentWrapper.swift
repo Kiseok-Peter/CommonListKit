@@ -29,6 +29,15 @@ struct ComponentWrapper: Component {
     }
     
     /**
+     크기 계산용 hash 처리 함수
+     
+     - Parameter hasher: 해시 처리를 위한 Hasher 객체
+     */
+    func sizeHash(into hasher: inout Hasher) {
+        original.sizeHash(into: &hasher)
+    }
+    
+    /**
      `'Contnet'` View에 데이터 적용하는 함수
      
      - Parameters:

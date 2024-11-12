@@ -27,7 +27,9 @@ extension Module: ModuleProtocol {
     public var dependencies: [TargetDependency] {
         switch self {
         case .list: [.external(name: "CommonFoundation")]
-        case .tests: [.target(name: Module.list.rawValue)]
+        case .tests: [.target(name: Module.list.rawValue),
+                      .external(name: "Quick"),
+                      .external(name: "Nimble"),]
         }
     }
 }

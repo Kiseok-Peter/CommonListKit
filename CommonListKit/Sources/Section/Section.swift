@@ -19,11 +19,11 @@ struct Section: Hashable {
     /// 아이템과 아이템 간격
     let minimumInteritemSpacing: CGFloat
     /// 섹션 Header Component
-    let header: (any Component)?
+    let header: ComponentWrapper?
     /// 섹션 Footer Component
-    let footer: (any Component)?
+    let footer: ComponentWrapper?
     /// 섹션 아이템 Component 배열
-    let items: [any Component]
+    let items: [ComponentWrapper]
     
     init(identifier: String,
          minimumLineSpacing: CGFloat = 0,
@@ -32,11 +32,22 @@ struct Section: Hashable {
          footer: (any Component)? = nil,
          items: [any Component]) {
         self.identifier = identifier
+        
         self.minimumLineSpacing = minimumLineSpacing
         self.minimumInteritemSpacing = minimumInteritemSpacing
-        self.header = header
-        self.footer = footer
-        self.items = items
+        
+        self.header = if let header {
+            ComponentWrapper(header)
+        } else {
+            nil
+        }
+        self.footer = if let footer {
+            ComponentWrapper(footer)
+        } else {
+            nil
+        }
+        
+        self.items = items.map { ComponentWrapper($0) }
     }
     
     func hash(into hasher: inout Hasher) {

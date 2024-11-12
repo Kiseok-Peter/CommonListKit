@@ -15,8 +15,7 @@ final class ComponentTests: QuickSpec {
         var component2: DummyComponent!
         
         describe("Component 유효성") {
-            context("Component 동일성 검사 1") {
-                
+            context("동일성 검사 1") {
                 beforeEach {
                     component1 = DummyComponent(identifier: "dummy_component_1")
                     component2 = DummyComponent(identifier: "dummy_component_1")

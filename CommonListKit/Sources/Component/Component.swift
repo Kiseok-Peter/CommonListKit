@@ -39,4 +39,14 @@ protocol Component: Hashable {
         - content: Component에 매칭되어 데이터를 적용할 Content View
      */
     func render(content: Content)
+    /**
+     렌더링할 `'Contnet'` View를 생성하여 반환해주는 함수
+     
+     - Returns: 렌더링할 Content 뷰
+     */
+    func renderContent() -> Content
+}
+
+extension Component {
+    func renderContent() -> Content { Content() }
 }

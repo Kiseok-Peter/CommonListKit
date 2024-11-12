@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import CommonFoundation
 
-
-public final class CollectionViewAdapter {
-    /// 처리할 UICollectionView
+/**
+ UICollectionView의 처리를 위한 Adapter
+ 
+ UICollectionView DataSource 및 Layout을 Section, Component를 이용하여 자동으로 처리 위한 Adapter
+ */
+public final class CollectionViewAdapter: NSObject {
+    /// Adapter 처리할 UICollectionView
     weak var collectionView: UICollectionView?
     
     /// CollectionView에 적용된 Section 모델
@@ -20,12 +25,53 @@ public final class CollectionViewAdapter {
         set { updateSections(with: newValue) }
     }
     
+    /// UICollectionView에 Register한 Cell의 reuseIdentifier
+    var registeredCellIdentifiers: Set<String> = []
+    
+    /**
+     CollectionViewAdapter의 초기화
+     
+     - Parameter collectionView: Adapter 처리할 UICollectionView
+     */
     public init(with collectionView: UICollectionView) {
         self.collectionView = collectionView
     }
 }
 
+// MARK: Get Handler
 extension CollectionViewAdapter {
+    /**
+     Section 추출 함수
+     
+     Section index 값을 이용하여 Section 모델 값을 추출하는 함수
+     
+     - Parameter index: 추출할 Section의 Section index
+     - Returns: index로 추출된 Section 모델. 존재하지 않는 index인 경우 nil 반환.
+     */
+    func section(at index: Int) -> Section? {
+        sections[safe: index]
+    }
+    
+    /**
+     Component 아이템 추출 함수
+     
+     IndexPath 값을 이용하여 Component 모델 값을 추출하는 함수
+     
+     - Parameter indexPath: 추출할 Component의 Section index, Item index 모델인 IndexPath 값.
+     - Returns: indexPath로 추출된 Component 모델. 존재하지 않는 index인 경우 nil 반환.
+     */
+    func item(at indexPath: IndexPath) -> ComponentWrapper? {
+        section(at: indexPath.section)?.items[safe: indexPath.item]
+    }
+}
+
+// MARK: Update Sections
+extension CollectionViewAdapter {
+    /**
+     Section 업데이트 동작 함수
+     
+     - Parameter inputSections: 업데이트할 Section 배열
+     */
     private func updateSections(with inputSections: [Section]) {
         guard let collectionView else { return }
         

@@ -17,6 +17,8 @@ struct ComponentWrapper: Component {
     
     /// Component 고유 ID 값 설정
     var identifier: String { original.identifier }
+    /// Component의 Cell Reuse ID 값
+    var reuseIdentifier: String { original.reuseIdentifier }
     
     /** 
      ComponentWrapper 초기화
@@ -57,7 +59,15 @@ struct ComponentWrapper: Component {
     }
     
     static func == (lhs: ComponentWrapper, rhs: ComponentWrapper) -> Bool {
-        lhs.hashValue == rhs.hashValue
+        lhs.original.hashValue == rhs.original.hashValue
+    }
+    
+    static func == (lhs: some Component, rhs: ComponentWrapper) -> Bool {
+        lhs.hashValue == rhs.original.hashValue
+    }
+    
+    static func == (lhs: ComponentWrapper, rhs: some Component) -> Bool {
+        lhs.original.hashValue == rhs.hashValue
     }
 }
 
@@ -65,15 +75,12 @@ private protocol ComponentContainerProtocol {
     associatedtype Base: Component
 
     var component: Base { get }
-    var identifier: String { get }
 
     func renderContent() -> UIView
     func render(content: UIView)
 }
 
 private struct ComponentContainer<Base: Component>: ComponentContainerProtocol {
-    var identifier: String { component.identifier }
-    
     var component: Base
     
     init(component: Base) {

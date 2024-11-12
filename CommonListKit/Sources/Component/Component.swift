@@ -31,6 +31,8 @@ protocol Component: Hashable {
     
     /// Component 고유 ID 값 설정
     var identifier: String { get }
+    /// Component의 Cell Reuse ID 값
+    var reuseIdentifier: String { get }
     
     /**
      크기 계산용 hash 처리 함수
@@ -55,12 +57,13 @@ protocol Component: Hashable {
 }
 
 extension Component {
+    var reuseIdentifier: String { String(reflecting: Self.self) }
+    
     func renderContent() -> Content { Content() }
-}
-
-extension Component {
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
+        hasher.combine(reuseIdentifier)
         
         sizeHash(into: &hasher)
     }

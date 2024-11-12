@@ -33,15 +33,13 @@ final class ComponentTests: QuickSpec {
             }
             
             context("Component 동일성 검사 2") {
-                var component2: (any Component)?
-                
                 beforeEach {
                     component1 = DummyComponent(identifier: "dummy_component_1")
                     component2 = DummyComponent(identifier: "dummy_component_2")
                 }
                 
                 it("같지 않은 경우") {
-                    expect(component1.identifier).toNot(equal(component2?.identifier))
+                    expect(component1.identifier).toNot(equal(component2.identifier))
                 }
                 
                 afterEach {

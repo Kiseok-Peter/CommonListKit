@@ -14,4 +14,6 @@ struct DummyComponent: Component {
     var identifier: String
     
     func render(content: Content) { }
+    
+    func sizeHash(into hasher: inout Hasher) { }
 }

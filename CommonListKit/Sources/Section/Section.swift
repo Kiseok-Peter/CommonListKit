@@ -25,6 +25,20 @@ struct Section: Hashable {
     /// 섹션 아이템 Component 배열
     let items: [any Component]
     
+    init(identifier: String,
+         minimumLineSpacing: CGFloat = 0,
+         minimumInteritemSpacing: CGFloat = 0,
+         header: (any Component)? = nil,
+         footer: (any Component)? = nil,
+         items: [any Component]) {
+        self.identifier = identifier
+        self.minimumLineSpacing = minimumLineSpacing
+        self.minimumInteritemSpacing = minimumInteritemSpacing
+        self.header = header
+        self.footer = footer
+        self.items = items
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
         hasher.combine(minimumLineSpacing)

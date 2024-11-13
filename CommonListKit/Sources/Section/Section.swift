@@ -10,7 +10,7 @@ import Foundation
 /**
  List 섹션  모델
  */
-struct Section: Hashable {
+public struct Section: Hashable {
     /// Section 고유 ID 값
     let identifier: String
     
@@ -25,7 +25,7 @@ struct Section: Hashable {
     /// 섹션 아이템 Component 배열
     let items: [ComponentWrapper]
     
-    init(identifier: String,
+    public init(identifier: String,
          minimumLineSpacing: CGFloat = 0,
          minimumInteritemSpacing: CGFloat = 0,
          header: (any Component)? = nil,
@@ -50,7 +50,7 @@ struct Section: Hashable {
         self.items = items.map { ComponentWrapper($0) }
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
         hasher.combine(minimumLineSpacing)
         hasher.combine(minimumInteritemSpacing)
@@ -59,7 +59,7 @@ struct Section: Hashable {
         items.forEach { $0.hash(into: &hasher) }
     }
     
-    static func == (lhs: Section, rhs: Section) -> Bool {
+    public static func == (lhs: Section, rhs: Section) -> Bool {
         lhs.hashValue == rhs.hashValue
     }
 }

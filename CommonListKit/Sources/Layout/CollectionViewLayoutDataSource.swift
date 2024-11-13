@@ -10,7 +10,7 @@ import Foundation
 /**
  CollectionViewLayoutProtocol에서 레이아웃 처리를 위한 DataSource Protocol
  */
-protocol CollectionViewLayoutDataSource: AnyObject {
+public protocol CollectionViewLayoutDataSource: AnyObject {
     /**
      Section 추출 함수
      

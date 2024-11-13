@@ -10,15 +10,15 @@ import UIKit
 /**
  Component 프로토콜 any, some 처리 편리성을 위한 Wrapper
  */
-struct ComponentWrapper: Component {
+public struct ComponentWrapper: Component {
     private let container: any ComponentContainerProtocol
     /// 원래 Component 값
     var original: any Component { container.component }
     
     /// Component 고유 ID 값 설정
-    var identifier: String { original.identifier }
+    public var identifier: String { original.identifier }
     /// Component의 Cell Reuse ID 값
-    var reuseIdentifier: String { original.reuseIdentifier }
+    public var reuseIdentifier: String { original.reuseIdentifier }
     
     /** 
      ComponentWrapper 초기화
@@ -35,7 +35,7 @@ struct ComponentWrapper: Component {
      
      - Parameter hasher: 해시 처리를 위한 Hasher 객체
      */
-    func sizeHash(into hasher: inout Hasher) {
+    public func sizeHash(into hasher: inout Hasher) {
         original.sizeHash(into: &hasher)
     }
     
@@ -45,7 +45,7 @@ struct ComponentWrapper: Component {
      - Parameters:
         - content: Component에 매칭되어 데이터를 적용할 Content View
      */
-    func render(content: UIView) {
+    public func render(content: UIView) {
         container.render(content: content)
     }
     
@@ -54,11 +54,11 @@ struct ComponentWrapper: Component {
      
      - Returns: 렌더링할 Content 뷰
      */
-    func renderContent() -> UIView {
+    public func renderContent() -> UIView {
         container.renderContent()
     }
     
-    static func == (lhs: ComponentWrapper, rhs: ComponentWrapper) -> Bool {
+    public static func == (lhs: ComponentWrapper, rhs: ComponentWrapper) -> Bool {
         lhs.original.hashValue == rhs.original.hashValue
     }
     

@@ -10,7 +10,7 @@ import UIKit
 /**
  UICollectionView에서 레이아웃 처리를 위한 Protocol
  */
-protocol CollectionViewLayoutProtocol {
+public protocol CollectionViewLayoutProtocol: AnyObject {
     /// 레이아웃 처리에 필요한 데이터 처리를 위한 DataSource
     var dataSource: CollectionViewLayoutDataSource? { get set }
     

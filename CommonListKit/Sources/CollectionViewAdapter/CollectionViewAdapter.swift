@@ -27,6 +27,10 @@ public final class CollectionViewAdapter: NSObject {
     
     /// UICollectionView에 Register한 Cell의 reuseIdentifier
     var registeredCellIdentifiers: Set<String> = []
+    /// UICollectionView에 Register한 Header의 reuseIdentifier
+    var registeredHeaderIdentifiers: Set<String> = []
+    /// UICollectionView에 Register한 Footer의 reuseIdentifier
+    var registeredFooterIdentifiers: Set<String> = []
     
     /**
      CollectionViewAdapter의 초기화
@@ -34,7 +38,10 @@ public final class CollectionViewAdapter: NSObject {
      - Parameter collectionView: Adapter 처리할 UICollectionView
      */
     public init(with collectionView: UICollectionView) {
+        super.init()
+        
         self.collectionView = collectionView
+        collectionView.dataSource = self
     }
 }
 

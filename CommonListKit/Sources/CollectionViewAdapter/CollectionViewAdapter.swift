@@ -37,16 +37,17 @@ public final class CollectionViewAdapter: NSObject {
      
      - Parameter collectionView: Adapter 처리할 UICollectionView
      */
-    public init(with collectionView: UICollectionView) {
+    public init(with collectionView: UICollectionView, layout: CollectionViewLayoutProtocol) {
         super.init()
         
         self.collectionView = collectionView
         collectionView.dataSource = self
+        layout.dataSource = self
     }
 }
 
 // MARK: Get Handler
-extension CollectionViewAdapter {
+extension CollectionViewAdapter: CollectionViewLayoutDataSource {
     /**
      Section 추출 함수
      
@@ -55,10 +56,12 @@ extension CollectionViewAdapter {
      - Parameter index: 추출할 Section의 Section index
      - Returns: index로 추출된 Section 모델. 존재하지 않는 index인 경우 nil 반환.
      */
-    func section(at index: Int) -> Section? {
+    public func section(at index: Int) -> Section? {
         sections[safe: index]
     }
-    
+}
+
+extension CollectionViewAdapter {
     /**
      Component 아이템 추출 함수
      

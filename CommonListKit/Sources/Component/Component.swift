@@ -25,7 +25,7 @@ import UIKit
  }
  ```
  */
-protocol Component: Hashable {
+public protocol Component: Hashable {
     /// Component에 매칭되는 뷰 지정
     associatedtype Content: UIView
     
@@ -61,7 +61,7 @@ extension Component {
     
     func renderContent() -> Content { Content() }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
         hasher.combine(reuseIdentifier)
         

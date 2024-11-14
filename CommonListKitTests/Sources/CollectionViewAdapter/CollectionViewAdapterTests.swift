@@ -13,19 +13,18 @@ import UIKit
 final class CollectionViewAdapterTests: QuickSpec {
     override class func spec() {
         var sut: CollectionViewAdapter!
-        var dummy: UICollectionView!
         
-        describe("CollectionViewAdapter 생성") {
-            context("UICollectionView 전달") {
+        describe("CollectionViewAdapter") {
+            context("초기화") {
                 let layout = CollectionViewLayout()
+                let collectionView = UICollectionView(layout: layout)
                 
                 beforeEach {
-                    dummy = UICollectionView(layout: layout)
-                    sut = CollectionViewAdapter(with: dummy, layout: layout)
+                    sut = CollectionViewAdapter(with: collectionView, layout: layout)
                 }
                 
                 it("UICollectionViewDataSource 설정 확인") {
-                    expect(sut).to(beIdenticalTo(dummy.dataSource))
+                    expect(sut).to(beIdenticalTo(collectionView.dataSource))
                 }
                 
                 it("CollectionViewLayoutDataSource 설정 확인") {
@@ -33,7 +32,26 @@ final class CollectionViewAdapterTests: QuickSpec {
                 }
                 
                 afterEach {
-                    dummy = nil
+                    sut = nil
+                }
+            }
+            
+            context("섹션 업데이트") {
+                let layout = CollectionViewLayout()
+                let collectionView = UICollectionView(layout: layout)
+                
+                beforeEach {
+                    sut = CollectionViewAdapter(with: collectionView, layout: layout)
+                    sut.inputSections = [Section(identifier: "section",
+                                                 items: [DummyComponent(identifier: "component")])]
+                }
+                
+                it("sections 확인") {
+                    expect(sut.sections).to(equal([Section(identifier: "section",
+                                                           items: [DummyComponent(identifier: "component")])]))
+                }
+                
+                afterEach {
                     sut = nil
                 }
             }

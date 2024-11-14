@@ -55,6 +55,51 @@ final class CollectionViewAdapterTests: QuickSpec {
                     sut = nil
                 }
             }
+            
+            context("섹션 DataSource") {
+                let layout = CollectionViewLayout()
+                let collectionView = UICollectionView(layout: layout)
+                
+                beforeEach {
+                    sut = CollectionViewAdapter(with: collectionView, layout: layout)
+                    sut.inputSections = [Section(identifier: "section",
+                                                 header: DummyComponent(identifier: "header"),
+                                                 footer: DummyComponent(identifier: "footer"),
+                                                 items: [DummyComponent(identifier: "component")])]
+                }
+                
+                it("numberOfSections 확인") {
+                    expect(sut.numberOfSections(in: collectionView)).to(equal(1))
+                }
+                
+                it("numberOfItemsInSection 확인") {
+                    expect(sut.collectionView(collectionView, numberOfItemsInSection: 0)).to(equal(1))
+                }
+                
+                it("cellForItemAt 확인") {
+                    expect(sut.collectionView(collectionView,
+                                              cellForItemAt: IndexPath(item: 0, section: 0)))
+                    .to(beAKindOf(ComponentCollectionViewCell.self))
+                }
+                
+                it("viewForSupplementaryElementOfKind Header 확인") {
+                    expect(sut.collectionView(collectionView,
+                                              viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
+                                              at: IndexPath(item: 0, section: 0)))
+                    .to(beAKindOf(ComponentCollectionReusableView.self))
+                }
+                
+                it("viewForSupplementaryElementOfKind Footer 확인") {
+                    expect(sut.collectionView(collectionView,
+                                              viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionFooter,
+                                              at: IndexPath(item: 0, section: 0)))
+                    .to(beAKindOf(ComponentCollectionReusableView.self))
+                }
+                
+                afterEach {
+                    sut = nil
+                }
+            }
         }
     }
 }

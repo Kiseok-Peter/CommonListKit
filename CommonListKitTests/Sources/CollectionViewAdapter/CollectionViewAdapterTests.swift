@@ -15,16 +15,21 @@ final class CollectionViewAdapterTests: QuickSpec {
         var sut: CollectionViewAdapter!
         var dummy: UICollectionView!
         
-        describe("CollectionViewAdapter") {
-            context("생성 및 UICollectionView 전달") {
+        describe("CollectionViewAdapter 생성") {
+            context("UICollectionView 전달") {
+                let layout = CollectionViewLayout()
+                
                 beforeEach {
-                    let layout = CollectionViewLayout()
                     dummy = UICollectionView(layout: layout)
                     sut = CollectionViewAdapter(with: dummy, layout: layout)
                 }
                 
                 it("UICollectionViewDataSource 설정 확인") {
                     expect(sut).to(beIdenticalTo(dummy.dataSource))
+                }
+                
+                it("CollectionViewLayoutDataSource 설정 확인") {
+                    expect(sut).to(beIdenticalTo(layout.dataSource))
                 }
                 
                 afterEach {

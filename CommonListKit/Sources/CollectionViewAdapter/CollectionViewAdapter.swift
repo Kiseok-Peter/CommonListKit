@@ -85,9 +85,10 @@ extension CollectionViewAdapter {
     private func updateSections(with inputSections: [Section]) {
         guard let collectionView else { return }
         
+        sections = inputSections
+        
         Task {
             await MainActor.run {
-                sections = inputSections
                 collectionView.reloadData()
             }
         }
